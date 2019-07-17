@@ -23,7 +23,7 @@ class EigenXX(interface.TypeInspectorInterface):
         which should be quite common in Eigen.
         """
 
-        type_str = str(picked_obj.type)
+        type_str = str(picked_obj.type.strip_typedefs())
         is_eigen_map = 'Map' in type_str
         # First we need the python object for the actual matrix type. When
         # parsing a Map, the type is the first template parameter of the
@@ -106,6 +106,6 @@ class EigenXX(interface.TypeInspectorInterface):
         type as well
         """
         # Check if symbol type is the expected buffer
-        symbol_type = str(symbol.type)
+        symbol_type = str(symbol.type.strip_typedefs())
         type_regex = r'(const\s+)?Eigen::(\s+?[*&])?'
         return re.match(type_regex, symbol_type) is not None

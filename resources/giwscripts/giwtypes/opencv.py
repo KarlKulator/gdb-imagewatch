@@ -73,7 +73,7 @@ class Mat(interface.TypeInspectorInterface):
         type as well
         """
         # Check if symbol type is the expected buffer
-        symbol_type = str(symbol.type)
+        symbol_type = str(symbol.type.strip_typedefs())
         type_regex = r'(const\s+)?cv::Mat(\s+?[*&])?'
         return re.match(type_regex, symbol_type) is not None
 
@@ -124,6 +124,6 @@ class CvMat(interface.TypeInspectorInterface):
         }
 
     def is_symbol_observable(self, symbol, symbol_name):
-        symbol_type = str(symbol.type)
+        symbol_type = str(symbol.type.strip_typedefs())
         type_regex = r'(const\s+)?CvMat(\s+?[*&])?'
         return re.match(type_regex, symbol_type) is not None
